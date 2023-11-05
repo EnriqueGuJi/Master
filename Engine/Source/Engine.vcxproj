@@ -99,13 +99,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\Skizo\Desktop\Engine\Source\glew-2.1.0\include;C:\Users\Skizo\Desktop\Engine\Source\SDL\include;C:\Users\Skizo\Desktop\Engine\Source\imgui-1.89.9-docking</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Skizo\Desktop\Master\Engine\Source\imgui-1.89.9-docking;C:\Users\Skizo\Desktop\Master\Engine\Source\glew-2.1.0\include;C:\Users\Skizo\Desktop\Master\Engine\Source\SDL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>Default</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\Skizo\Desktop\Engine\Source\glew-2.1.0\lib\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\Skizo\Desktop\Master\Engine\Source\glew-2.1.0\lib\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;glew32.lib;kernel32.lib;user32.lib;gdi32.lib;shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -133,7 +133,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\Skizo\Desktop\Engine\Source\glew-2.1.0\include;C:\Users\Skizo\Desktop\Engine\Source\SDL\include;C:\Users\Skizo\Desktop\Engine\Source\imgui-1.89.9-docking</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Skizo\Desktop\Master\Engine\Source\imgui-1.89.9-docking;C:\Users\Skizo\Desktop\Master\Engine\Source\glew-2.1.0\include;C:\Users\Skizo\Desktop\Master\Engine\Source\SDL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>Default</LanguageStandard>
     </ClCompile>
     <Link>
@@ -141,7 +141,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\Skizo\Desktop\Engine\Source\glew-2.1.0\lib\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\Skizo\Desktop\Master\Engine\Source\glew-2.1.0\lib\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;glew32.lib;kernel32.lib;user32.lib;gdi32.lib;shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>

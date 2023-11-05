@@ -48,13 +48,13 @@ update_status ModuleEditor::Update()
 {
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame();
-
+	
 	ImGui::NewFrame();
 	bool cierrate = true;
 
-	if (ImGui::Begin("buenagente", &cierrate)) 
+	if (ImGui::Begin("Windowaso", &cierrate)) 
 	{
-		ImGui::Text("tushuevos");
+		ImGui::Text("Hello!");
 		ImGui::End();
 	}
 
