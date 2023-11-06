@@ -9,8 +9,6 @@ class ModuleEditor : public Module
 {
 public:
 	
-	ImGuiIO* io;
-
 	ModuleEditor();
 	~ModuleEditor();
 
@@ -20,4 +18,7 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 
+private:
+
+	ImGuiIO* io;
 };
