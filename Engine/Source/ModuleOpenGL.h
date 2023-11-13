@@ -9,8 +9,13 @@ struct SDL_Rect;
 class ModuleOpenGL : public Module
 {
 public:
+
+	unsigned vbo;
+	unsigned ebo;
+
 	ModuleOpenGL();
 	~ModuleOpenGL();
+
 
 	bool Init();
 	update_status PreUpdate();

@@ -10,7 +10,7 @@ class ModuleEditor : public Module
 public:
 	
 	ImGuiIO* io;
-
+	bool cierrate = true;
 	ModuleEditor();
 	~ModuleEditor();
 

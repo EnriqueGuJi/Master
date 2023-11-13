@@ -29,7 +29,7 @@ bool ModuleEditor::Init()
 	io->ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
 	io->ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 	io->ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
-	//io->ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
+	io->ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
 
 	ImGui_ImplSDL2_InitForOpenGL(App->GetWindow()->window, App->GetOpenGL()->context);
 	ImGui_ImplOpenGL3_Init("#version 460");
@@ -50,13 +50,15 @@ update_status ModuleEditor::Update()
 	ImGui_ImplSDL2_NewFrame();
 	
 	ImGui::NewFrame();
-	bool cierrate = true;
-
-	if (ImGui::Begin("Windowaso", &cierrate)) 
+	if (cierrate) 
 	{
-		ImGui::Text("Hello!");
-		ImGui::End();
+		if (ImGui::Begin("Windowaso", &cierrate))
+		{
+			ImGui::Text("Hello!");
+			ImGui::End();
+		}
 	}
+	
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
