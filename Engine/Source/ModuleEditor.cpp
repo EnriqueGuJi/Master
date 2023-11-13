@@ -52,7 +52,7 @@ update_status ModuleEditor::Update()
 
 	static bool cierrate = true;
 
-	if(cierrate)
+	if (cierrate) 
 	{
 		if (ImGui::Begin("Windowaso", &cierrate))
 		{
@@ -60,7 +60,7 @@ update_status ModuleEditor::Update()
 			ImGui::End();
 		}
 	}
-	
+
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 

@@ -9,7 +9,8 @@ class ModuleWindow;
 class ModuleTextures;
 class ModuleInput;
 class ModuleEditor;
-class ModuleRenderExercise;
+class ModuleRender;
+class ModuleProgram;
 
 class Application
 {
@@ -26,6 +27,8 @@ public:
     ModuleWindow* GetWindow() { return window; }
     ModuleInput*  GetInput() { return input; }
     ModuleEditor* GetEditor() { return editor; }
+    ModuleProgram* GetProgram() { return program; }
+
 
 private:
 
@@ -33,6 +36,7 @@ private:
     ModuleWindow* window = nullptr;
     ModuleInput* input = nullptr;
     ModuleEditor* editor = nullptr;
+    ModuleProgram* program = nullptr;
 
     std::list<Module*> modules;
 
