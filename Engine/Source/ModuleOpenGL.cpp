@@ -26,8 +26,6 @@ ModuleOpenGL::~ModuleOpenGL()
 // Called before render is available
 bool ModuleOpenGL::Init()
 {
-
-
 	LOG("Creating Renderer context");
 
 	SDL_GL_CreateContext(App->GetWindow()->window);
@@ -50,42 +48,6 @@ bool ModuleOpenGL::Init()
 	SDL_GetWindowSize(App->GetWindow()->window, &windowWidth, &windowHeight);
 	glViewport(0, 0, windowWidth, windowHeight);
 
-	// Compilar y vincular shaders
-	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
-	const GLchar* vertexShaderSource =
-		"#version 460\n"
-		"layout(location=0) in vec3 my_vertex_position;\n"
-		"void main()\n"
-		"{\n"
-		"    gl_Position = vec4(my_vertex_position, 1.0);\n"
-		"}\n";
-
-	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-	glCompileShader(vertexShader);
-
-	GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-	const GLchar* fragmentShaderSource =
-		"#version 460\n"
-		"out vec4 FragColor;\n"
-		"void main()\n"
-		"{\n"
-		"    FragColor = vec4(1.0, 1.0, 1.0, 1.0); // Blanco s�lido\n"
-		"}\n";
-
-	glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-	glCompileShader(fragmentShader);
-
-	shaderProgram = glCreateProgram();
-	glAttachShader(shaderProgram, vertexShader);
-	glAttachShader(shaderProgram, fragmentShader);
-	glLinkProgram(shaderProgram);
-	glUseProgram(shaderProgram);
-
-	LOG("Using Glew %s", glewGetString(GLEW_VERSION));
-	LOG("Vendor: %s", glGetString(GL_VENDOR));
-	LOG("Renderer: %s", glGetString(GL_RENDERER));
-	LOG("OpenGL version supported %s", glGetString(GL_VERSION));
-	LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 
 	// Configurar los datos de los v�rtices del tri�ngulo
 	GLfloat vertices[] = {
@@ -133,8 +95,6 @@ update_status ModuleOpenGL::PreUpdate()
 // Called every draw update
 update_status ModuleOpenGL::Update()
 {
-
-
 	return UPDATE_CONTINUE;
 }
 

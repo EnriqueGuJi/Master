@@ -30,6 +30,7 @@
       <Filter>imgui</Filter>
     </ClCompile>
     <ClCompile Include="ModuleProgram.cpp" />
+    <ClCompile Include="ModuleRenderExercice.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -68,6 +69,7 @@
       <Filter>imgui</Filter>
     </ClInclude>
     <ClInclude Include="ModuleProgram.h" />
+    <ClInclude Include="ModuleRenderExercice.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="imgui">
