@@ -1,6 +1,7 @@
 #pragma once
 #include "Module.h"
 #include "Globals.h"
+#include "glew.h"
 
 struct SDL_Texture;
 struct SDL_Renderer;
@@ -9,9 +10,6 @@ struct SDL_Rect;
 class ModuleOpenGL : public Module
 {
 public:
-
-	unsigned vbo;
-	unsigned ebo;
 
 	ModuleOpenGL();
 	~ModuleOpenGL();

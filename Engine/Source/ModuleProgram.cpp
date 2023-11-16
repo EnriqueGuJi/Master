@@ -1,6 +1,6 @@
 #include "ModuleProgram.h"
 #include <windows.h>
-#include "GL/glew.h"
+#include "glew.h"
 
 ModuleProgram::ModuleProgram()
 {

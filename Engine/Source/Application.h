@@ -9,10 +9,13 @@ class ModuleWindow;
 class ModuleTextures;
 class ModuleInput;
 class ModuleEditor;
-class ModuleRender;
+class ModuleRenderExercice;
 class ModuleProgram;
+class ModuleCamera;
+class ModuleDebugDraw;
 
 class Application
+
 {
 public:
 
@@ -23,20 +26,25 @@ public:
 	update_status Update();
 	bool CleanUp();
 
+    ModuleRenderExercice* GetRenderExercice() { return renderExercice; }
     ModuleOpenGL* GetOpenGL() { return render; }
     ModuleWindow* GetWindow() { return window; }
     ModuleInput*  GetInput() { return input; }
     ModuleEditor* GetEditor() { return editor; }
     ModuleProgram* GetProgram() { return program; }
+    ModuleCamera* GetCamera() { return camera; }
+    ModuleDebugDraw* GetDebugDraw() { return debugDraw; }
 
 
 private:
-
+    ModuleRenderExercice* renderExercice = nullptr;
     ModuleOpenGL* render = nullptr;
     ModuleWindow* window = nullptr;
     ModuleInput* input = nullptr;
     ModuleEditor* editor = nullptr;
     ModuleProgram* program = nullptr;
+    ModuleCamera* camera = nullptr;
+    ModuleDebugDraw* debugDraw = nullptr;
 
     std::list<Module*> modules;
 

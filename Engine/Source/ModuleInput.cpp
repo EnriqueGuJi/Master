@@ -2,7 +2,7 @@
 #include "Application.h"
 #include "ModuleInput.h"
 #include "ModuleOpenGL.h"
-#include "SDL/include/SDL.h"
+#include "SDL.h"
 #include "ModuleEditor.h"
 #include "backends/imgui_impl_sdl2.h"
 #include "ModuleWindow.h"

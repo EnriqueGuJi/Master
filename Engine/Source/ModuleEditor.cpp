@@ -2,11 +2,9 @@
 #include "ModuleEditor.h"
 #include "ModuleWindow.h"
 #include "ModuleOpenGL.h"
-
 #include "imgui.h"
 #include "backends/imgui_impl_sdl2.h"
 #include "backends/imgui_impl_opengl3.h"
-#include "backends/imgui_impl_opengl3_loader.h"
 
 
 ModuleEditor::ModuleEditor()
@@ -54,7 +52,7 @@ update_status ModuleEditor::Update()
 
 	if (cierrate) 
 	{
-		if (ImGui::Begin("Windowaso", &cierrate))
+		if (ImGui::Begin("Oooooole", &cierrate))
 		{
 			ImGui::Text("Hello!");
 			ImGui::End();

@@ -2,13 +2,16 @@
 #define __ModuleWindow_H__
 
 #include "Module.h"
-#include "SDL/include/SDL.h"
+#include "SDL.h"
 
 class Application;
 
 class ModuleWindow : public Module
 {
 public:
+
+	int width;
+	int height;
 
 	ModuleWindow();
 
