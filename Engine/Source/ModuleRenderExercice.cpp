@@ -55,6 +55,8 @@ void ModuleRenderExercice::RenderVBO(unsigned vbo, unsigned program)
 {
 
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+
 	glEnableVertexAttribArray(0);
 	// size = 3 float per vertex
 	// stride = 0 is equivalent to stride = sizeof(float)*3
@@ -71,7 +73,7 @@ void ModuleRenderExercice::RenderVBO(unsigned vbo, unsigned program)
 
 bool ModuleRenderExercice::Init()
 {
-	
+
 	vbo = CreateTriangleVBO();
 	ebo = CreateTriangleEBO();
 	return true;

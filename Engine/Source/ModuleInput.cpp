@@ -8,11 +8,25 @@
 #include "ModuleWindow.h"
 
 ModuleInput::ModuleInput()
-{}
+{
+	keyboard = new KeyState[MAX_KEYS];
+}
 
 // Destructor
 ModuleInput::~ModuleInput()
-{}
+{
+	delete keyboard;
+}
+
+KeyState ModuleInput::GetKey(int id) const
+{
+	return keyboard[id];
+}
+
+KeyState ModuleInput::GetMouseButtonDown(int id) const
+{
+	return mouse_buttons[id - 1];
+}
 
 // Called before render is available
 bool ModuleInput::Init()
@@ -33,6 +47,9 @@ bool ModuleInput::Init()
 // Called every draw update
 update_status ModuleInput::Update()
 {
+	mouseMotion = { 0, 0 };
+	yWheel = 0;
+
     SDL_Event sdlEvent;
 
     while (SDL_PollEvent(&sdlEvent) != 0)
@@ -48,13 +65,64 @@ update_status ModuleInput::Update()
                     App->GetOpenGL()->WindowResized(sdlEvent.window.data1, sdlEvent.window.data2);
                 break;
 
-            case SDL_KEYDOWN:
-                if (sdlEvent.key.keysym.sym == SDLK_ESCAPE) 
-                    return UPDATE_STOP;
+
+			case SDL_MOUSEBUTTONDOWN:
+				mouse_buttons[sdlEvent.button.button - 1] = KEY_DOWN;
+				break;
+
+			case SDL_MOUSEBUTTONUP:
+				mouse_buttons[sdlEvent.button.button - 1] = KEY_UP;
+				break;
+
+			case SDL_MOUSEMOTION:
+				mouseMotion.x = sdlEvent.motion.xrel;
+				mouseMotion.y = sdlEvent.motion.yrel;
+				mousePosition.x = sdlEvent.motion.x;
+				mousePosition.y = sdlEvent.motion.y;
+				break;
+
+			case SDL_MOUSEWHEEL:
+				yWheel = sdlEvent.wheel.y;
+				break;
+
         }
     }
 
-    keyboard = SDL_GetKeyboardState(NULL);
+	const Uint8* keys = SDL_GetKeyboardState(NULL);
+
+	for (int i = 0; i < MAX_KEYS; ++i)
+	{
+		if (keys[i] == 1)
+		{
+			if (keyboard[i] == KEY_IDLE)
+				keyboard[i] = KEY_DOWN;
+			else
+				keyboard[i] = KEY_REPEAT;
+		}
+		else
+		{
+			if (keyboard[i] == KEY_REPEAT || keyboard[i] == KEY_DOWN)
+				keyboard[i] = KEY_UP;
+			else
+				keyboard[i] = KEY_IDLE;
+		}
+	}
+
+	for (int i = 0; i < NUM_MOUSE_BUTTONS; ++i)
+	{
+		if (mouse_buttons[i] == KEY_DOWN)
+			mouse_buttons[i] = KEY_REPEAT;
+
+		if (mouse_buttons[i] == KEY_UP)
+			mouse_buttons[i] = KEY_IDLE;
+	}
+
+	if (GetKey(SDL_SCANCODE_ESCAPE) == KEY_REPEAT) 
+	{
+		return UPDATE_STOP;
+	}
+
+	//COMPROBAR SI LOS FOR VAN ARRIBA DEL WHILE
 
     return UPDATE_CONTINUE;
 }
