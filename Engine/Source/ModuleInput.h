@@ -3,7 +3,6 @@
 #include "Globals.h"
 #include "Math/float2.h"
 
-
 #define NUM_MOUSE_BUTTONS 5
 #define MAX_KEYS 300
 

@@ -67,7 +67,6 @@ void ModuleCamera::CameraMovement()
 			frustum.pos += frustum.WorldRight() * camSpeed;
 		}
 
-		view = LookAt(frustum.pos, frustum.front + frustum.pos, frustum.up).Inverted();
 	}
 
 void ModuleCamera::PanMovement() 
@@ -86,7 +85,6 @@ void ModuleCamera::PanMovement()
 		}
 	}
 
-	view = LookAt(frustum.pos, frustum.front + frustum.pos, frustum.up).Inverted();
 }
 
 void ModuleCamera::ZoomMovement()
@@ -101,10 +99,32 @@ void ModuleCamera::ZoomMovement()
 			frustum.pos -= frustum.front * camSpeed;
 		}
 
-		view = LookAt(frustum.pos, frustum.front + frustum.pos, frustum.up).Inverted();
-
 }
 
+void ModuleCamera::RotationMovement(float angle, const float3& axis)
+{
+	if ((App->GetInput()->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_REPEAT))
+	{
+		if (App->GetInput()->mouseMotion.y != 0)
+		{
+			float3x3 rotationDeltaMatrix = float3x3::RotateY(DegToRad(App->GetInput()->mousePosition.x *= camSpeed));
+			float3 oldFront = frustum.front.Normalized();
+			frustum.front = rotationDeltaMatrix.MulDir(oldFront);
+			float3 oldUp = frustum.up.Normalized();
+			frustum.up = rotationDeltaMatrix.MulDir(oldUp);
+		}
+		//if (App->GetInput()->mouseMotion.y != 0)
+		//{
+		//	float3x3 rotationDeltaMatrix = float3x3::RotateX(DegToRad(App->GetInput()->mousePosition.y));
+		//	float3 oldFront = frustum.front.Normalized();
+		//	frustum.front = rotationDeltaMatrix.MulDir(oldFront);
+		//	float3 oldUp = frustum.up.Normalized();
+		//	frustum.up = rotationDeltaMatrix.MulDir(oldUp);
+		//}
+		
+	}
+	
+}
 
 bool ModuleCamera::Init()
 {
@@ -126,7 +146,6 @@ bool ModuleCamera::Init()
 			float4x4::RotateZ(0.f),
 			float3(1.0f, 1.0f, 1.0f));
 
-
 	view = LookAt(frustum.pos, frustum.front, frustum.up).Inverted();
 
 	return true;
@@ -134,9 +153,12 @@ bool ModuleCamera::Init()
 
 update_status ModuleCamera::PreUpdate()
 {
+	view = LookAt(frustum.pos, frustum.front + frustum.pos, frustum.up).Inverted();
+
 	CameraMovement();
 	PanMovement();
 	ZoomMovement();
+	RotationMovement(rotationAngle, frustum.pos);
 
 	return UPDATE_CONTINUE;
 }

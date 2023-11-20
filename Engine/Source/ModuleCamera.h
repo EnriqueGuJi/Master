@@ -19,11 +19,16 @@ public:
 
 	Frustum frustum;
 	float camSpeed = 0.1f;
+
+	float rotationAngle = 0.0f;
+	float3x3 rotationAxis; // Eje Y
+
 	float4x4 LookAt(float3 cameraPos, float3 targetPos, float3 upVector);
 
 	void CameraMovement();
 	void PanMovement();
 	void ZoomMovement();
+	void RotationMovement(float angle, const float3& axis);
 
 	ModuleCamera();
 	~ModuleCamera();
