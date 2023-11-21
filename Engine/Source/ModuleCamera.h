@@ -13,22 +13,26 @@ public:
 
 	float aspectRatio;
 
-	float4x4 project;
+	float4x4 project; 
 	float4x4 view;
 	float4x4 model;
+
+	float2 lastPosition; // last pos of mouseMov
 
 	Frustum frustum;
 	float camSpeed = 0.1f;
 
 	float rotationAngle = 0.0f;
-	float3x3 rotationAxis; // Eje Y
 
 	float4x4 LookAt(float3 cameraPos, float3 targetPos, float3 upVector);
 
 	void CameraMovement();
 	void PanMovement();
 	void ZoomMovement();
-	void RotationMovement(float angle, const float3& axis);
+	void RotationMovement();
+
+	void RotationInX();
+	void RotationInY();
 
 	ModuleCamera();
 	~ModuleCamera();

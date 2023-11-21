@@ -22,6 +22,7 @@ public:
 
 	float2 mouseMotion;
 	float2 mousePosition;
+
 	float yWheel;
 
 	KeyState* keyboard = nullptr;
