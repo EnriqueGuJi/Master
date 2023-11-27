@@ -99,7 +99,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies/glew-2.1.0/include;$(SolutionDir)Dependencies/imgui-1.89.9-docking;$(SolutionDir)Dependencies/MathGeoLib/include;$(SolutionDir)Dependencies/SDL/include;$(SolutionDir)Dependencies/debug_draw;$(SolutionDir)Dependencies/DirectXTex</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies/glew-2.1.0/include;$(SolutionDir)Dependencies/imgui-1.89.9-docking;$(SolutionDir)Dependencies/MathGeoLib/include;$(SolutionDir)Dependencies/SDL/include;$(SolutionDir)Dependencies/debug_draw;$(SolutionDir)Dependencies/DirectXTex;$(SolutionDir)Dependencies/tiny_gltf</AdditionalIncludeDirectories>
       <LanguageStandard>Default</LanguageStandard>
     </ClCompile>
     <Link>
@@ -192,6 +192,7 @@
     <ClCompile Include="ModuleDebugDraw.cpp" />
     <ClCompile Include="ModuleEditor.cpp" />
     <ClCompile Include="ModuleInput.cpp" />
+    <ClCompile Include="ModuleModel.cpp" />
     <ClCompile Include="ModuleOpenGL.cpp" />
     <ClCompile Include="ModuleProgram.cpp" />
     <ClCompile Include="ModuleRenderExercice.cpp" />
@@ -271,6 +272,10 @@
     <ClInclude Include="Dependencies\MathGeolib\include\Math\sse_mathfun.h" />
     <ClInclude Include="Dependencies\MathGeolib\include\Math\TransformOps.h" />
     <ClInclude Include="Dependencies\MathGeolib\include\Time\Clock.h" />
+    <ClInclude Include="Dependencies\tiny_gltf\json.hpp" />
+    <ClInclude Include="Dependencies\tiny_gltf\stb_image.h" />
+    <ClInclude Include="Dependencies\tiny_gltf\stb_image_write.h" />
+    <ClInclude Include="Dependencies\tiny_gltf\tiny_gltf.h" />
     <ClInclude Include="Dummy.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Module.h" />
@@ -278,6 +283,7 @@
     <ClInclude Include="ModuleDebugDraw.h" />
     <ClInclude Include="ModuleEditor.h" />
     <ClInclude Include="ModuleInput.h" />
+    <ClInclude Include="ModuleModel.h" />
     <ClInclude Include="ModuleOpenGL.h" />
     <ClInclude Include="ModuleProgram.h" />
     <ClInclude Include="ModuleRenderExercice.h" />

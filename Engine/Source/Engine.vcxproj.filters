@@ -130,6 +130,7 @@
       <Filter>MathGeoLib</Filter>
     </ClCompile>
     <ClCompile Include="ModuleTexture.cpp" />
+    <ClCompile Include="ModuleModel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -358,6 +359,19 @@
       <Filter>MathGeoLib</Filter>
     </ClInclude>
     <ClInclude Include="ModuleTexture.h" />
+    <ClInclude Include="ModuleModel.h" />
+    <ClInclude Include="Dependencies\tiny_gltf\stb_image.h">
+      <Filter>tiny_gltf</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\tiny_gltf\stb_image_write.h">
+      <Filter>tiny_gltf</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\tiny_gltf\tiny_gltf.h">
+      <Filter>tiny_gltf</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\tiny_gltf\json.hpp">
+      <Filter>tiny_gltf</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="imgui">
@@ -374,6 +388,9 @@
     </Filter>
     <Filter Include="Textures">
       <UniqueIdentifier>{80496025-86af-4ec5-aea9-2bcbca145ba0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tiny_gltf">
+      <UniqueIdentifier>{c235fce0-4308-491b-99c7-8cfd623230ca}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

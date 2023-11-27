@@ -64,7 +64,7 @@ update_status ModuleInput::Update()
             case SDL_WINDOWEVENT:
                 if (sdlEvent.window.event == SDL_WINDOWEVENT_RESIZED) //|| (sdlEvent.window.event == SDL_WINDOWEVENT_SIZE_CHANGED))
                    App->GetOpenGL()->WindowResized(sdlEvent.window.data1, sdlEvent.window.data2);	
-				   App->GetOpenGL()->WindowResized(App->GetCamera()->SetAspectRatio, App->GetCamera()->SetFOV);
+				  // App->GetOpenGL()->WindowResized(App->GetCamera()->SetAspectRatio, App->GetCamera()->SetFOV);
                 break;
 
 
@@ -86,7 +86,6 @@ update_status ModuleInput::Update()
 			case SDL_MOUSEWHEEL: // to get event to mouse wheel
 				yWheel = sdlEvent.wheel.y;
 				break;
-
         }
     }
 
