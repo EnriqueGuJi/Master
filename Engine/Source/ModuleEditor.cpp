@@ -47,13 +47,14 @@ update_status ModuleEditor::Update()
 	ImGui_ImplSDL2_NewFrame();
 	ImGui::NewFrame();
 
-	static bool cierrate = true;
+	static bool cierrate = false;
 
 	if (cierrate) 
 	{
 		if (ImGui::Begin("Oooooole", &cierrate))
 		{
 			ImGui::Text("Hello!");
+			
 			ImGui::End();
 		}
 	}

@@ -13,7 +13,7 @@ ModuleProgram::~ModuleProgram()
 
 }
 
-char* ModuleProgram::LoadingShader(const char* shader_file_name)
+char* ModuleProgram::LoadingShader(const char* shader_file_name) // To load the data of shader
 {
 		
 		char* data = nullptr;
@@ -32,11 +32,10 @@ char* ModuleProgram::LoadingShader(const char* shader_file_name)
 		}
 
 		return data;
-
 }
 
-unsigned ModuleProgram::CompileShader(unsigned type, const char* source)
-{
+unsigned ModuleProgram::CompileShader(unsigned type, const char* source) // To compile the shader
+{ 
 	unsigned shader_id = glCreateShader(type);
 	glShaderSource(shader_id, 1, &source, 0);
 	glCompileShader(shader_id);
@@ -60,7 +59,7 @@ unsigned ModuleProgram::CompileShader(unsigned type, const char* source)
 
 }
 
-unsigned ModuleProgram::CreateProgram(unsigned vtx_shader, unsigned frg_shader)
+unsigned ModuleProgram::CreateProgram(unsigned vtx_shader, unsigned frg_shader) // For linking fragment and vertex shader
 {
 	unsigned program_id = glCreateProgram();
 	glAttachShader(program_id, vtx_shader);
@@ -91,13 +90,16 @@ bool ModuleProgram::Init()
 {
 	const char* vertexData;
 	const char* fragmentData;
-	
+
+	//First step to load the shaders, we need to write manually the path
 	vertexData = LoadingShader("../Source/vertexShader.glsl");
 	fragmentData = LoadingShader("../Source/fragmentShader.glsl");
 
+	//Second step, we need to pass the variables vertexData, and fragmentData from before
 	compileVertex = CompileShader(GL_VERTEX_SHADER, vertexData);
 	compileFragment = CompileShader(GL_FRAGMENT_SHADER, fragmentData);
 
+	//Last step, we use programID to pass to the RenderVBO method in renderExercice to draw the triangle, and pass the other 2 variable that contains frag and vertex compilated
 	programId = CreateProgram(compileVertex, compileFragment);
 
 	return true;

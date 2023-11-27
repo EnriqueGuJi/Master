@@ -129,6 +129,7 @@
     <ClCompile Include="Dependencies\MathGeolib\include\Time\Clock.cpp">
       <Filter>MathGeoLib</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleTexture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -356,6 +357,7 @@
     <ClInclude Include="Dependencies\MathGeolib\include\Time\Clock.h">
       <Filter>MathGeoLib</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleTexture.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="imgui">
@@ -369,6 +371,9 @@
     </Filter>
     <Filter Include="MathGeoLib">
       <UniqueIdentifier>{c517eb1c-aa94-4b2f-b15d-8ab6e787dad3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Textures">
+      <UniqueIdentifier>{80496025-86af-4ec5-aea9-2bcbca145ba0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -391,6 +396,9 @@
     </None>
     <None Include="Dependencies\MathGeolib\include\Math\Matrix.inl">
       <Filter>MathGeoLib</Filter>
+    </None>
+    <None Include="Baboon.jpg">
+      <Filter>Textures</Filter>
     </None>
   </ItemGroup>
 </Project>

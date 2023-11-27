@@ -6,6 +6,7 @@
 #include "ModuleEditor.h"
 #include "backends/imgui_impl_sdl2.h"
 #include "ModuleWindow.h"
+#include "ModuleCamera.h"
 
 ModuleInput::ModuleInput()
 {
@@ -18,12 +19,12 @@ ModuleInput::~ModuleInput()
 	delete keyboard;
 }
 
-KeyState ModuleInput::GetKey(int id) const
+KeyState ModuleInput::GetKey(int id) const // method to get key down
 {
 	return keyboard[id];
 }
 
-KeyState ModuleInput::GetMouseButtonDown(int id) const
+KeyState ModuleInput::GetMouseButtonDown(int id) const // method to get mouse button down
 {
 	return mouse_buttons[id - 1];
 }
@@ -47,8 +48,8 @@ bool ModuleInput::Init()
 // Called every draw update
 update_status ModuleInput::Update()
 {
-	mouseMotion = { 0, 0 };
-	yWheel = 0;
+	mouseMotion = { 0, 0 }; //to update mouseMotion position every frame 
+	yWheel = 0; //to update wheel button every frame 
 
     SDL_Event sdlEvent;
 
@@ -61,27 +62,28 @@ update_status ModuleInput::Update()
             case SDL_QUIT:
                 return UPDATE_STOP;
             case SDL_WINDOWEVENT:
-                if (sdlEvent.window.event == SDL_WINDOWEVENT_RESIZED) //|| sdlEvent.window.event == SDL_WINDOWEVENT_SIZE_CHANGED)
-                    App->GetOpenGL()->WindowResized(sdlEvent.window.data1, sdlEvent.window.data2);
+                if (sdlEvent.window.event == SDL_WINDOWEVENT_RESIZED) //|| (sdlEvent.window.event == SDL_WINDOWEVENT_SIZE_CHANGED))
+                   App->GetOpenGL()->WindowResized(sdlEvent.window.data1, sdlEvent.window.data2);	
+				   App->GetOpenGL()->WindowResized(App->GetCamera()->SetAspectRatio, App->GetCamera()->SetFOV);
                 break;
 
 
-			case SDL_MOUSEBUTTONDOWN:
+			case SDL_MOUSEBUTTONDOWN: // to get event to mouse click
 				mouse_buttons[sdlEvent.button.button - 1] = KEY_DOWN;
 				break;
 
-			case SDL_MOUSEBUTTONUP:
+			case SDL_MOUSEBUTTONUP: // to get event to mouse click up
 				mouse_buttons[sdlEvent.button.button - 1] = KEY_UP;
 				break;
 
-			case SDL_MOUSEMOTION:
+			case SDL_MOUSEMOTION: // to get event to mouse motion
 				mouseMotion.x = sdlEvent.motion.xrel;
 				mouseMotion.y = sdlEvent.motion.yrel;
 				mousePosition.x = sdlEvent.motion.x;
 				mousePosition.y = sdlEvent.motion.y;
 				break;
 
-			case SDL_MOUSEWHEEL:
+			case SDL_MOUSEWHEEL: // to get event to mouse wheel
 				yWheel = sdlEvent.wheel.y;
 				break;
 

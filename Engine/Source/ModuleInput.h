@@ -1,10 +1,12 @@
 #pragma once
+
 #include "Module.h"
 #include "Globals.h"
 #include "Math/float2.h"
 
-#define NUM_MOUSE_BUTTONS 5
-#define MAX_KEYS 300
+//macros
+#define NUM_MOUSE_BUTTONS 5 // num of mouse buttons
+#define MAX_KEYS 300 // num of keys
 
 enum KeyState
 {
@@ -13,6 +15,7 @@ enum KeyState
 	KEY_REPEAT,
 	KEY_UP
 };
+
 class ModuleInput : public Module
 {
 public:

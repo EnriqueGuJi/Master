@@ -27,7 +27,7 @@ bool ModuleOpenGL::Init()
 {
 	LOG("Creating Renderer context");
 
-	SDL_GL_CreateContext(App->GetWindow()->window);
+	SDL_GL_CreateContext(App->GetWindow()->window); //first step to initialize openGL
 
 	// � check for errors
 	LOG("Using Glew %s", glewGetString(GLEW_VERSION));
@@ -36,6 +36,7 @@ bool ModuleOpenGL::Init()
 	LOG("OpenGL version supported %s", glGetString(GL_VERSION));
 	LOG("GLSL: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
 
+	//Initializing Glew
 	GLenum err = glewInit();
 	if (err != GLEW_OK) {
 		LOG("Error initializing GLEW: %s", glewGetErrorString(err));

@@ -5,9 +5,7 @@
 #include "MathGeoLib.h"
 #include <SDL.h>
 
-class ModuleCamera :
-
-    public Module
+class ModuleCamera : public Module
 {
 public:
 
@@ -20,19 +18,23 @@ public:
 	float2 lastPosition; // last pos of mouseMov
 
 	Frustum frustum;
+	float rotateSpeed = 0.05;
 	float camSpeed = 0.1f;
-
-	float rotationAngle = 0.0f;
 
 	float4x4 LookAt(float3 cameraPos, float3 targetPos, float3 upVector);
 
+	//Unity scene movements
 	void CameraMovement();
 	void PanMovement();
 	void ZoomMovement();
 	void RotationMovement();
-
+	
+	//rotate Y,X methods
 	void RotationInX();
 	void RotationInY();
+
+	void SetFOV();
+	void SetAspectRatio();
 
 	ModuleCamera();
 	~ModuleCamera();
