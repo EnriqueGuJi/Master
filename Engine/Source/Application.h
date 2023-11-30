@@ -40,7 +40,7 @@ public:
     ModuleModel* GetModel() { return model; }
 
 
-
+    // hay hacer getters
 private:
     ModuleRenderExercice* renderExercice = nullptr;
     ModuleOpenGL* render = nullptr;

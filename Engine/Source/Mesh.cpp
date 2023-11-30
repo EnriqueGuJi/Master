@@ -17,17 +17,22 @@ void Mesh::Render()
 	glUseProgram(App->GetProgram()->programId);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 	//glEnableVertexAttribArray(1);
 	//glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 3 + sizeof(float) * 2, (void*)(sizeof(float) * 3));
+
 	if (indCount > 0)
 	{
-		glDrawElements(GL_TRIANGLES, indCount, GL_UNSIGNED_INT, 0);
+		glBindVertexArray(vao);
+
+		glUseProgram(App->GetProgram()->programId);
+		glDrawElements(GL_TRIANGLES, indCount, GL_UNSIGNED_INT, nullptr);
 	}
 	else
 	{
-			glDrawArrays(GL_TRIANGLES, 0, vertexCount);
+		glDrawArrays(GL_TRIANGLES, 0, vertexCount);
 
 	}
 }
@@ -37,6 +42,7 @@ void Mesh::Load(const tinygltf::Model model, const tinygltf::Mesh& mesh, const t
 
 	const auto& itPos = primitive.attributes.find("POSITION"); // busca POSITION en el archivo gltf si esta entra en el IF
 	const auto& itNor = primitive.attributes.find("NORMAL");
+	const auto& itNor = primitive.attributes.find("TEXCOORD_0");
 	
 	// crear una variable para guardar el numero con el que compararemos el itPos
 
@@ -148,3 +154,27 @@ void Mesh::LoadEBO(const tinygltf::Model & model, const tinygltf::Mesh & mesh, c
 			glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
 		}
 	}
+
+void Mesh::CreateVAO()
+{
+	glGenVertexArrays(1, (GLuint*)&vao);
+	glBindVertexArray(vao);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)(sizeof(float) * 3 * vertexCount));
+
+	glBindVertexArray(0);
+}
+
+void Mesh::Draw(const std::vector<unsigned>& textures)
+{
+	glUseProgram(App->GetProgram()->programId);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, textures[materialIndex]);
+	glUniform1i(glGetUniformLocation(App->GetProgram()->programId, "diffuse"), 0);
+	glBindVertexArray(vao);
+	glDrawElements(GL_TRIANGLES, indCount, GL_UNSIGNED_INT, nullptr);
+}

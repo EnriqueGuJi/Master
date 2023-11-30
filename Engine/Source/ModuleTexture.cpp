@@ -59,6 +59,7 @@ bool ModuleTexture::Init()
     }
 
     glGenTextures(1, (GLuint*)&baboonTex); //asignate a number and get texture
+
     glBindTexture(GL_TEXTURE_2D, baboonTex); //bind texture
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);

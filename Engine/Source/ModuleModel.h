@@ -9,7 +9,7 @@ class ModuleModel : public Module
 public:
 
 	void Load(const char* assetFileName);
-
+	void LoadMaterials(const tinygltf::Model& srcModel);
 
 	ModuleModel();
 	~ModuleModel();

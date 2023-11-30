@@ -15,14 +15,15 @@ public:
 	ModuleOpenGL();
 	~ModuleOpenGL();
 
-
 	bool Init();
 	update_status PreUpdate();
 	update_status Update();
 	update_status PostUpdate();
 	bool CleanUp();
+
 	void WindowResized(unsigned width, unsigned height);
 
-	void* context;
+	// lo ponen private = nullptr y en el constructor : y se lo pasan
+	void* context = nullptr;
 
 };

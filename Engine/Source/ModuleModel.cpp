@@ -31,6 +31,21 @@ void ModuleModel::Load(const char* assetFileName)
 	}
 }
 
+void ModuleModel::LoadMaterials(const tinygltf::Model& srcModel)
+{
+	for (const auto& srcMaterial : srcModel.materials)
+	{
+		unsigned int textureId = 0;
+		if (srcMaterial.pbrMetallicRoughness.baseColorTexture.index >= 0)
+		{
+			const tinygltf::Texture& texture = srcModel.textures[srcMaterial.pbrMetallicRoughness.baseColorTexture.index];
+			const tinygltf::Image& image = srcModel.images[texture.source];
+			textureId = (App->getTextureModule()->Load(image.uri));
+		}
+		textures.push_back(textureId);
+	}
+}
+
 ModuleModel::ModuleModel()
 {
 

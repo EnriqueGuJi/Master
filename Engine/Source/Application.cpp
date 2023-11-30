@@ -1,4 +1,7 @@
 #pragma once
+
+// no hace falta incluir tanta libreria
+// 
 #include "Application.h"
 #include "ModuleWindow.h"
 #include "ModuleOpenGL.h"
