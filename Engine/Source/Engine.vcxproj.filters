@@ -131,7 +131,7 @@
     </ClCompile>
     <ClCompile Include="ModuleTexture.cpp" />
     <ClCompile Include="ModuleModel.cpp" />
-    <ClCompile Include="ModuleMesh.cpp" />
+    <ClCompile Include="Mesh.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -361,8 +361,8 @@
     </ClInclude>
     <ClInclude Include="ModuleTexture.h" />
     <ClInclude Include="ModuleModel.h" />
-    <ClInclude Include="ModuleMesh.h" />
-    <ClInclude Include="..\..\..\tinygltf-release\json.h">
+    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="..\..\..\tinygltf-release\json.hpp">
       <Filter>tiny_gltf</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\tinygltf-release\stb_image.h">

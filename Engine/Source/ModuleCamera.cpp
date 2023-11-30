@@ -189,7 +189,7 @@ bool ModuleCamera::Init()
 
 	project = frustum.ProjectionMatrix(); // Projection matrix
 
-	model = float4x4::FromTRS(float3(0.0f, 1.0f, 0.0f), //Model matrix
+	model = float4x4::FromTRS(float3(0.0f, 0.5f, 0.0f), //Model matrix
 			float4x4::RotateZ(0.f),
 			float3(1.0f, 1.0f, 1.0f));
 

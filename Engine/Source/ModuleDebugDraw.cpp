@@ -612,7 +612,7 @@ bool ModuleDebugDraw::CleanUp()
 update_status  ModuleDebugDraw::Update()
 {
     
-    dd::axisTriad(float4x4::identity, 0.1f, 1.0f);
+    dd::axisTriad(float4x4::identity, 0.1f, 1.0f); //size and lenght of arrows
     dd::xzSquareGrid(-10, 10, 0.0f, 0.5f, dd::colors::Pink); // here we can change some values, like color, size 
 
     Draw(App->GetCamera()->view, App->GetCamera()->project, App->GetWindow()->width, App->GetWindow()->height); //function to draw the grid

@@ -1,7 +1,8 @@
 #pragma once
 
 #include "Module.h"
-#include "tiny_gltf.h"
+
+class Mesh;
 
 class ModuleModel : public Module
 {
@@ -13,6 +14,7 @@ public:
 	ModuleModel();
 	~ModuleModel();
 
+	Mesh* mesh;
 
 	bool Init();
 	update_status PreUpdate();
