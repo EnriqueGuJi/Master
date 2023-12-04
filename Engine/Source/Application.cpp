@@ -25,7 +25,6 @@ Application::Application()
 	modules.push_back(camera = new ModuleCamera());
 	modules.push_back(debugDraw = new ModuleDebugDraw());
 	modules.push_back(renderExercice = new ModuleRenderExercice());
-
 	modules.push_back(editor = new ModuleEditor());
 
 	

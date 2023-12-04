@@ -2,7 +2,7 @@
 #include "Module.h"
 #include "Math/float4x4.h"
 #include "Math/float3.h"
-#include "MathGeoLib.h"
+#include "Geometry/Frustum.h"
 #include <SDL.h>
 
 class ModuleCamera : public Module

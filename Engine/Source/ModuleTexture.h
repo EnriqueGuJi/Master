@@ -6,11 +6,12 @@ class ModuleTexture : public Module
 {
 public:
 
-	int baboonTex;
-
 	int widthTex, heightTex, colorTex;
 
 	int internalFormat, format, type;
+
+	unsigned int LoadTexture(const char* path);
+
 
 	ModuleTexture();
 	~ModuleTexture();

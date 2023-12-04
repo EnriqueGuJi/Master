@@ -7,6 +7,7 @@
 #include "Application.h"
 #include "ModuleModel.h"
 #include "Mesh.h"
+#include "ModuleTexture.h"
 
 void ModuleModel::Load(const char* assetFileName)
 {
@@ -29,7 +30,28 @@ void ModuleModel::Load(const char* assetFileName)
 			mesh->LoadEBO(model, srcMesh, primitive);
 		}
 	}
+	LoadMaterials(model);
 }
+
+void ModuleModel::LoadMaterials(const tinygltf::Model& srcModel)
+{
+	std::string firstPath = "Textures/";
+	
+	for (const auto& srcMaterial : srcModel.materials)
+	{
+		unsigned int textureId = 0;
+		if (srcMaterial.pbrMetallicRoughness.baseColorTexture.index >= 0)
+		{
+			const tinygltf::Texture& texture = srcModel.textures[srcMaterial.pbrMetallicRoughness.baseColorTexture.index];
+			const tinygltf::Image& image = srcModel.images[texture.source];
+			firstPath += image.uri;
+			textureId = App->GetTexture()->LoadTexture(firstPath.c_str());
+		}
+		textures.push_back(textureId);
+	}
+}
+
+
 
 ModuleModel::ModuleModel()
 {
@@ -45,7 +67,7 @@ ModuleModel::~ModuleModel()
 // Called before render is available
 bool ModuleModel::Init()
 {
-	Load("Models/BoxInterleaved.gltf");
+	Load("Models/BoxTextured.gltf");
 	return true;
 }
 

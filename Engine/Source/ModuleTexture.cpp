@@ -3,6 +3,7 @@
 #include "glew.h"
 #include "DirectXTex.h"
 
+
 ModuleTexture::ModuleTexture()
 {
     
@@ -13,19 +14,32 @@ ModuleTexture::~ModuleTexture()
 
 }
 
-bool ModuleTexture::Init()
+const wchar_t* GetWC(const char* c)
+{
+    const size_t cSize = strlen(c) + 1;
+    size_t zSice;
+    wchar_t* wc = new wchar_t[cSize];
+    mbstowcs_s(&zSice, wc, cSize, c, cSize -1);
+
+    return wc;
+}
+
+//unsigned solo recoge valores positivos, nunca recoge signo.
+
+unsigned int ModuleTexture::LoadTexture(const char* path)
 {
     DirectX::ScratchImage image;
+    const wchar_t* pathTex = GetWC(path);
 
     // every texture have one format, if the format its not the correct it use another method for load
-    HRESULT hr = DirectX::LoadFromDDSFile(L"Textures/Baboon.jpg", DirectX::DDS_FLAGS_NONE, nullptr, image);
+    HRESULT hr = DirectX::LoadFromDDSFile(pathTex, DirectX::DDS_FLAGS_NONE, nullptr, image);
     if (FAILED(hr))
     {
-        hr = DirectX::LoadFromTGAFile(L"Textures/Baboon.jpg", DirectX::TGA_FLAGS_NONE, nullptr, image);
+        hr = DirectX::LoadFromTGAFile(pathTex, DirectX::TGA_FLAGS_NONE, nullptr, image);
 
         if (FAILED(hr))
         {
-            hr = DirectX::LoadFromWICFile(L"Textures/Baboon.jpg", DirectX::WIC_FLAGS_NONE, nullptr, image);
+            hr = DirectX::LoadFromWICFile(pathTex, DirectX::WIC_FLAGS_NONE, nullptr, image);
 
             if (FAILED(hr))
             {
@@ -58,8 +72,10 @@ bool ModuleTexture::Init()
         assert(false && "Unsupported format");
     }
 
-    glGenTextures(1, (GLuint*)&baboonTex); //asignate a number and get texture
-    glBindTexture(GL_TEXTURE_2D, baboonTex); //bind texture
+    unsigned int createTex;
+
+    glGenTextures(1, (GLuint*)&createTex); //asignate a number and get texture
+    glBindTexture(GL_TEXTURE_2D, createTex); //bind texture
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, image.GetMetadata().mipLevels - 1);
@@ -71,14 +87,19 @@ bool ModuleTexture::Init()
 
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, widthTex, heightTex, 0, GL_BGR, GL_UNSIGNED_BYTE, image.GetPixels());
 
-   for (size_t i = 0; i < image.GetMetadata().mipLevels; ++i)
-   {
-       const DirectX::Image* mip = image.GetImage(i, 0, 0);
-       glTexImage2D(GL_TEXTURE_2D, i, internalFormat, mip->width, mip->height, 0, format, type, mip->pixels);
-   }
-
+    for (size_t i = 0; i < image.GetMetadata().mipLevels; ++i)
+    {
+        const DirectX::Image* mip = image.GetImage(i, 0, 0);
+        glTexImage2D(GL_TEXTURE_2D, i, internalFormat, mip->width, mip->height, 0, format, type, mip->pixels);
+    }
     glGenerateMipmap(GL_TEXTURE_2D);
 
+    return createTex;
+}
+
+bool ModuleTexture::Init()
+{
+   
 	return true;
 }
 
@@ -91,9 +112,7 @@ update_status ModuleTexture::PreUpdate()
 // Called every draw update
 update_status ModuleTexture::Update()
 {
-    glActiveTexture(GL_TEXTURE5);
-    glBindTexture(GL_TEXTURE_2D, baboonTex);
-
+ 
 	return UPDATE_CONTINUE;
 }
 
@@ -105,7 +124,5 @@ update_status ModuleTexture::PostUpdate()
 // Called before quitting
 bool ModuleTexture::CleanUp()
 {
-    glDeleteTextures(0, (GLuint*)baboonTex);
 	return true;
-
 }
