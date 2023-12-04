@@ -19,7 +19,7 @@ public:
 
 	Frustum frustum;
 	float rotateSpeed = 0.05;
-	float camSpeed = 0.1f;
+	float camSpeed = 0.01f;
 
 	float4x4 LookAt(float3 cameraPos, float3 targetPos, float3 upVector);
 

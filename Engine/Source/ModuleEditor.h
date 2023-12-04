@@ -3,6 +3,7 @@
 #include "Module.h"
 
 class Application;
+
 struct ImGuiIO;
 
 class ModuleEditor : public Module
