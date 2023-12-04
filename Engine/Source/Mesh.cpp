@@ -92,34 +92,34 @@ void Mesh::Load(const tinygltf::Model model, const tinygltf::Mesh& mesh, const t
 		glUnmapBuffer(GL_ARRAY_BUFFER);
 	}
 
-	if (itNor != primitive.attributes.end())
-	{
-		const tinygltf::Accessor& posAcc = model.accessors[itNor->second];
-		vertexCount = posAcc.count;
-		SDL_assert(posAcc.type == TINYGLTF_TYPE_VEC3);
-		SDL_assert(posAcc.componentType == GL_FLOAT);
-		const tinygltf::BufferView& posView = model.bufferViews[posAcc.bufferView];
-		const tinygltf::Buffer& posBuffer = model.buffers[posView.buffer];
-		const unsigned char* bufferPos = &(posBuffer.data[posAcc.byteOffset + posView.byteOffset]);
-
-		//hay que sumnar en bytes para que sale el PTR hasta los normals y que no se quede en las posiciones.
-
-		float3* ptr = reinterpret_cast<float3*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
-		for (size_t i = 0; i < posAcc.count; ++i)
-		{
-			ptr[i] = *reinterpret_cast<const float3*>(bufferPos);
-
-			if (posView.byteStride > 0)
-			{
-				bufferPos += posView.byteStride;
-			}
-			else
-			{
-				bufferPos += sizeof(float) * 3; // sizeof para que empize a contar en el siguientes vertice porque si no se queda en el 0.
-			}
-		}
-		glUnmapBuffer(GL_ARRAY_BUFFER);
-	}
+	//if (itNor != primitive.attributes.end())
+	//{
+	//	const tinygltf::Accessor& posAcc = model.accessors[itNor->second];
+	//	vertexCount = posAcc.count;
+	//	SDL_assert(posAcc.type == TINYGLTF_TYPE_VEC3);
+	//	SDL_assert(posAcc.componentType == GL_FLOAT);
+	//	const tinygltf::BufferView& posView = model.bufferViews[posAcc.bufferView];
+	//	const tinygltf::Buffer& posBuffer = model.buffers[posView.buffer];
+	//	const unsigned char* bufferPos = &(posBuffer.data[posAcc.byteOffset + posView.byteOffset]);
+	//
+	//	//hay que sumnar en bytes para que sale el PTR hasta los normals y que no se quede en las posiciones.
+	//
+	//	float3* ptr = reinterpret_cast<float3*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
+	//	for (size_t i = 0; i < posAcc.count; ++i)
+	//	{
+	//		ptr[i] = *reinterpret_cast<const float3*>(bufferPos);
+	//
+	//		if (posView.byteStride > 0)
+	//		{
+	//			bufferPos += posView.byteStride;
+	//		}
+	//		else
+	//		{
+	//			bufferPos += sizeof(float) * 3; // sizeof para que empize a contar en el siguientes vertice porque si no se queda en el 0.
+	//		}
+	//	}
+	//	glUnmapBuffer(GL_ARRAY_BUFFER);
+	//}
 
 	if (itTex != primitive.attributes.end())
 	{
@@ -131,7 +131,7 @@ void Mesh::Load(const tinygltf::Model model, const tinygltf::Mesh& mesh, const t
 		const tinygltf::Buffer& posBuffer = model.buffers[posView.buffer];
 		const unsigned char* bufferPos = &(posBuffer.data[posAcc.byteOffset + posView.byteOffset]);
 
-		float2* ptr = reinterpret_cast<float2*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
+		float2* ptr = reinterpret_cast<float2*> (reinterpret_cast<char*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY)+ vertexCount *sizeof(float) * 3)));
 		for (size_t i = 0; i < posAcc.count; ++i)
 		{
 			ptr[i] = *reinterpret_cast<const float2*>(bufferPos);
