@@ -26,6 +26,7 @@ void ModuleModel::Load(const char* assetFileName)
 		for (const auto& primitive : srcMesh.primitives)
 		{
 			mesh = new Mesh;
+			mesh->CreateVAO();
 			mesh->Load(model, srcMesh, primitive);
 			mesh->LoadEBO(model, srcMesh, primitive);
 		}
@@ -51,8 +52,6 @@ void ModuleModel::LoadMaterials(const tinygltf::Model& srcModel)
 	}
 }
 
-
-
 ModuleModel::ModuleModel()
 {
 
@@ -67,7 +66,7 @@ ModuleModel::~ModuleModel()
 // Called before render is available
 bool ModuleModel::Init()
 {
-	Load("Models/BoxTextured.gltf");
+	Load("Models/untitled.gltf");
 	return true;
 }
 
@@ -80,7 +79,6 @@ update_status ModuleModel::PreUpdate()
 // Called every draw update
 update_status ModuleModel::Update()
 {
-
 	mesh->Render();
 	
 	return UPDATE_CONTINUE;

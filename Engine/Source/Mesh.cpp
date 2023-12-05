@@ -15,33 +15,26 @@
 
 void Mesh::Render()
 {
+	glBindVertexArray(vao);
 	glUseProgram(App->GetProgram()->programId);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-	//glEnableVertexAttribArray(1);
-	//glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 3 + sizeof(float) * 2, (void*)(sizeof(float) * 3));
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, App->GetModel()->textures[0]);
+
 	if (indCount > 0)
 	{
-		glDrawElements(GL_TRIANGLES, indCount, GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, indCount, GL_UNSIGNED_INT, nullptr);
 	}
 	else
 	{
-			glDrawArrays(GL_TRIANGLES, 0, vertexCount);
-
+		glDrawArrays(GL_TRIANGLES, 0, vertexCount);
 	}
 }
 
-
-
 void Mesh::Load(const tinygltf::Model model, const tinygltf::Mesh& mesh, const tinygltf::Primitive& primitive)
 {
-
 	const auto& itPos = primitive.attributes.find("POSITION"); // busca POSITION en el archivo gltf si esta entra en el IF
 	const auto& itNor = primitive.attributes.find("NORMAL");
 	const auto& itTex = primitive.attributes.find("TEXCOORD_0");
-
 	
 	// crear una variable para guardar el numero con el que compararemos el itPos
 	int bufferSize = 0;
@@ -92,35 +85,6 @@ void Mesh::Load(const tinygltf::Model model, const tinygltf::Mesh& mesh, const t
 		glUnmapBuffer(GL_ARRAY_BUFFER);
 	}
 
-	//if (itNor != primitive.attributes.end())
-	//{
-	//	const tinygltf::Accessor& posAcc = model.accessors[itNor->second];
-	//	vertexCount = posAcc.count;
-	//	SDL_assert(posAcc.type == TINYGLTF_TYPE_VEC3);
-	//	SDL_assert(posAcc.componentType == GL_FLOAT);
-	//	const tinygltf::BufferView& posView = model.bufferViews[posAcc.bufferView];
-	//	const tinygltf::Buffer& posBuffer = model.buffers[posView.buffer];
-	//	const unsigned char* bufferPos = &(posBuffer.data[posAcc.byteOffset + posView.byteOffset]);
-	//
-	//	//hay que sumnar en bytes para que sale el PTR hasta los normals y que no se quede en las posiciones.
-	//
-	//	float3* ptr = reinterpret_cast<float3*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
-	//	for (size_t i = 0; i < posAcc.count; ++i)
-	//	{
-	//		ptr[i] = *reinterpret_cast<const float3*>(bufferPos);
-	//
-	//		if (posView.byteStride > 0)
-	//		{
-	//			bufferPos += posView.byteStride;
-	//		}
-	//		else
-	//		{
-	//			bufferPos += sizeof(float) * 3; // sizeof para que empize a contar en el siguientes vertice porque si no se queda en el 0.
-	//		}
-	//	}
-	//	glUnmapBuffer(GL_ARRAY_BUFFER);
-	//}
-
 	if (itTex != primitive.attributes.end())
 	{
 		const tinygltf::Accessor& posAcc = model.accessors[itTex->second];
@@ -129,24 +93,54 @@ void Mesh::Load(const tinygltf::Model model, const tinygltf::Mesh& mesh, const t
 		SDL_assert(posAcc.componentType == GL_FLOAT);
 		const tinygltf::BufferView& posView = model.bufferViews[posAcc.bufferView];
 		const tinygltf::Buffer& posBuffer = model.buffers[posView.buffer];
-		const unsigned char* bufferPos = &(posBuffer.data[posAcc.byteOffset + posView.byteOffset]);
+		const unsigned char* bufferTex = &(posBuffer.data[posAcc.byteOffset + posView.byteOffset]);
 
-		float2* ptr = reinterpret_cast<float2*> (reinterpret_cast<char*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY)+ vertexCount *sizeof(float) * 3)));
+		float2* ptr = reinterpret_cast<float2*>(reinterpret_cast<char*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY)) + vertexCount * sizeof(float) * 3);
 		for (size_t i = 0; i < posAcc.count; ++i)
 		{
-			ptr[i] = *reinterpret_cast<const float2*>(bufferPos);
+			ptr[i] = *reinterpret_cast<const float2*>(bufferTex);
 
 			if (posView.byteStride > 0)
 			{
-				bufferPos += posView.byteStride;
+				bufferTex += posView.byteStride;
 			}
 			else
 			{
-				bufferPos += sizeof(float) * 2; // sizeof para que empize a contar en el siguientes vertice porque si no se queda en el 0.
+				bufferTex += sizeof(float) * 2; // sizeof para que empize a contar en el siguientes vertice porque si no se queda en el 0.
 			}
 		}
 		glUnmapBuffer(GL_ARRAY_BUFFER);
 	}
+
+	if (itNor != primitive.attributes.end())
+	{
+		const tinygltf::Accessor& posAcc = model.accessors[itNor->second];
+		vertexCount = posAcc.count;
+		SDL_assert(posAcc.type == TINYGLTF_TYPE_VEC3);
+		SDL_assert(posAcc.componentType == GL_FLOAT);
+		const tinygltf::BufferView& posView = model.bufferViews[posAcc.bufferView];
+		const tinygltf::Buffer& posBuffer = model.buffers[posView.buffer];
+		const unsigned char* bufferNor = &(posBuffer.data[posAcc.byteOffset + posView.byteOffset]);
+
+		//hay que sumnar en bytes para que sale el PTR hasta los normals y que no se quede en las posiciones.
+
+		float3* ptr = reinterpret_cast<float3*>(reinterpret_cast<char*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY)) + vertexCount * sizeof(float) * 5);
+		for (size_t i = 0; i < posAcc.count; ++i)
+		{
+			ptr[i] = *reinterpret_cast<const float3*>(bufferNor);
+
+			if (posView.byteStride > 0)
+			{
+				bufferNor += posView.byteStride;
+			}
+			else
+			{
+				bufferNor += sizeof(float) * 3; // sizeof para que empize a contar en el siguientes vertice porque si no se queda en el 0.
+			}
+		}
+		glUnmapBuffer(GL_ARRAY_BUFFER);
+	}
+
 }
 
 void Mesh::LoadEBO(const tinygltf::Model & model, const tinygltf::Mesh & mesh, const tinygltf::Primitive & primitive)
@@ -192,30 +186,18 @@ void Mesh::LoadEBO(const tinygltf::Model & model, const tinygltf::Mesh & mesh, c
 			/* TODO indAcc.componentType == TINYGLTF_PARAMETER_TYPE_UNSIGNED_BYTE*/
 			glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
 		}
+
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+		glEnableVertexAttribArray(1);
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)(sizeof(float) * 3 * vertexCount));
+		glEnableVertexAttribArray(2);
+		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)(sizeof(float) * 5 * vertexCount));
+		glBindVertexArray(0);
 }
 
 void Mesh::CreateVAO()
 {
 	glGenVertexArrays(1, (GLuint*)&vao);
 	glBindVertexArray(vao);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)(sizeof(float) * 3 * vertexCount));
-
-	glBindVertexArray(0);
-}
-
-void Mesh::Draw()
-{
-	glUseProgram(App->GetProgram()->programId);
-	glBindVertexArray(vao);
-	glDrawElements(GL_TRIANGLES, indCount, GL_UNSIGNED_INT, nullptr);
-	glUseProgram(App->GetProgram()->programId);
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, App->GetModel()->textures[0]);
-	glBindVertexArray(vao);
-	glDrawElements(GL_TRIANGLES, indCount, GL_UNSIGNED_INT, nullptr);
 }
