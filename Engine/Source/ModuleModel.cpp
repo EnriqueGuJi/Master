@@ -31,7 +31,11 @@ void ModuleModel::Load(const char* assetFileName)
 			mesh->LoadEBO(model, srcMesh, primitive);
 		}
 	}
-	LoadMaterials(model);
+
+	if (model.materials.size() > 0)
+	{
+		LoadMaterials(model);
+	}
 }
 
 void ModuleModel::LoadMaterials(const tinygltf::Model& srcModel)
@@ -66,7 +70,7 @@ ModuleModel::~ModuleModel()
 // Called before render is available
 bool ModuleModel::Init()
 {
-	Load("Models/untitled.gltf");
+	Load("Models/BakerHouse.gltf");
 	return true;
 }
 
@@ -80,7 +84,6 @@ update_status ModuleModel::PreUpdate()
 update_status ModuleModel::Update()
 {
 	mesh->Render();
-	
 	return UPDATE_CONTINUE;
 }
 
@@ -93,6 +96,5 @@ update_status ModuleModel::PostUpdate()
 // Called before quitting
 bool ModuleModel::CleanUp()
 {
-
 	return true;
 }

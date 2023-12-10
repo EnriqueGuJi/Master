@@ -2,7 +2,6 @@
 #define TINYGLTF_NO_STB_IMAGE
 #define TINYGLTF_NO_EXTERNAL_IMAGE
 
-#include "tiny_gltf.h"
 #include "Application.h"
 #include "ModuleOpenGL.h"
 #include "ModuleProgram.h"
@@ -12,13 +11,14 @@
 #include "ModuleCamera.h"
 #include "Mesh.h"
 #include "ModuleModel.h"
+#include "tiny_gltf.h"
 
 void Mesh::Render()
 {
 	glBindVertexArray(vao);
 	glUseProgram(App->GetProgram()->programId);
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, App->GetModel()->textures[0]);
+	glBindTexture(GL_TEXTURE_2D, App->GetModel()->textures[App->GetModel()->textures.size() - 1]);
 
 	if (indCount > 0)
 	{
@@ -62,7 +62,6 @@ void Mesh::Load(const tinygltf::Model model, const tinygltf::Mesh& mesh, const t
 		const tinygltf::Buffer& posBuffer = model.buffers[posView.buffer];
 		const unsigned char* bufferPos = &(posBuffer.data[posAcc.byteOffset + posView.byteOffset]);
 
-		
 		//solo puede estar creado 1 vez
 		glGenBuffers(1, (GLuint*)&vbo);
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);// hay que bindear siempre el buffer despues de usar un genbuffer
@@ -122,9 +121,19 @@ void Mesh::Load(const tinygltf::Model model, const tinygltf::Mesh& mesh, const t
 		const tinygltf::Buffer& posBuffer = model.buffers[posView.buffer];
 		const unsigned char* bufferNor = &(posBuffer.data[posAcc.byteOffset + posView.byteOffset]);
 
-		//hay que sumnar en bytes para que sale el PTR hasta los normals y que no se quede en las posiciones.
+		//hay que sumnar en bytes para que salte el PTR hasta los normals y que no se quede en las posiciones.
 
-		float3* ptr = reinterpret_cast<float3*>(reinterpret_cast<char*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY)) + vertexCount * sizeof(float) * 5);
+		float3* ptr = nullptr;
+
+		if (itTex != primitive.attributes.end())
+		{
+			ptr = reinterpret_cast<float3*>(reinterpret_cast<char*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY)) + vertexCount * sizeof(float) * 5);
+		}
+		else
+		{
+			ptr = reinterpret_cast<float3*>(reinterpret_cast<char*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY)) + vertexCount * sizeof(float) * 3);
+		}
+
 		for (size_t i = 0; i < posAcc.count; ++i)
 		{
 			ptr[i] = *reinterpret_cast<const float3*>(bufferNor);
@@ -140,7 +149,6 @@ void Mesh::Load(const tinygltf::Model model, const tinygltf::Mesh& mesh, const t
 		}
 		glUnmapBuffer(GL_ARRAY_BUFFER);
 	}
-
 }
 
 void Mesh::LoadEBO(const tinygltf::Model & model, const tinygltf::Mesh & mesh, const tinygltf::Primitive & primitive)
@@ -182,8 +190,6 @@ void Mesh::LoadEBO(const tinygltf::Model & model, const tinygltf::Mesh & mesh, c
 					ptr[i] = bufferInd[i];
 				}
 			}
-			/* TODO indAcc.componentType == TINYGLTF_PARAMETER_TYPE_UNSIGNED_SHORT*/
-			/* TODO indAcc.componentType == TINYGLTF_PARAMETER_TYPE_UNSIGNED_BYTE*/
 			glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
 		}
 

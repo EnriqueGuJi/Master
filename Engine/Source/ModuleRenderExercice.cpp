@@ -61,20 +61,17 @@ void ModuleRenderExercice::RenderVBO(unsigned vbo, unsigned program)
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
 
-	glEnableVertexAttribArray(0); //posiciones, se vinculan en el vertexShader, dependiendo del layout que asignas debes ponerlo entre el parentesis
+	glEnableVertexAttribArray(0); 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
-	//primer parametro el id que hay en el vertexShader, si tiene 2 o 3 valores en los indices, 
 	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)(sizeof(float)*12)); // en el sizeof decimos que empiece a contar desde el indice numero 12 hacia delante
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)(sizeof(float)*12));
 
-	// 1 triangle to draw = 3 vertices
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }
 
 bool ModuleRenderExercice::Init()
 {
-
 	vbo = CreateTriangleVBO();
 	ebo = CreateTriangleEBO();
 
@@ -83,7 +80,6 @@ bool ModuleRenderExercice::Init()
 
 update_status ModuleRenderExercice::PreUpdate()
 {
-
 	return UPDATE_CONTINUE;
 }
 
@@ -96,7 +92,7 @@ update_status ModuleRenderExercice::Update()
 	glUniformMatrix4fv(1, 1, GL_TRUE, (GLfloat*)&App->GetCamera()->view);
 	glUniformMatrix4fv(2, 1, GL_TRUE, (GLfloat*)&App->GetCamera()->project);
 	//For render the triangle, we need to put vbo, and the programId (the method that link both shaders)
-	//RenderVBO(vbo, App->GetProgram()->programId);
+	//RenderVBO(vbo, App->GetProgram()->programId); //for rendering square
 
 	return UPDATE_CONTINUE;
 }

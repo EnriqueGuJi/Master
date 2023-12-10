@@ -4,6 +4,7 @@
 #include "SDL.h"
 #include "glew.h"
 #include "ModuleProgram.h"
+#include "ModuleCamera.h"
 
 ModuleOpenGL::ModuleOpenGL()
 {
@@ -91,7 +92,6 @@ bool ModuleOpenGL::CleanUp()
 	SDL_GL_DeleteContext(App->GetOpenGL()->context);
 	SDL_DestroyWindow(App->GetWindow()->window);
 	SDL_Quit();
-
 	//Destroy window
 
 	return true;
@@ -100,5 +100,7 @@ bool ModuleOpenGL::CleanUp()
 void ModuleOpenGL::WindowResized(unsigned width, unsigned height)
 {
 	glViewport(0, 0, width, height);
+	float newAspectRatio = (float)width / (float)height;
+	App->GetCamera()->SetAspectRatio(newAspectRatio);
 }
 

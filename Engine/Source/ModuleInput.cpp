@@ -7,6 +7,11 @@
 #include "backends/imgui_impl_sdl2.h"
 #include "ModuleWindow.h"
 #include "ModuleCamera.h"
+#include "ModuleModel.h"
+#include "ModuleTexture.h"
+#include <algorithm>
+#include "glew.h"
+#include "Mesh.h"
 
 ModuleInput::ModuleInput()
 {
@@ -67,7 +72,7 @@ update_status ModuleInput::Update()
 				  // App->GetOpenGL()->WindowResized(App->GetCamera()->SetAspectRatio, App->GetCamera()->SetFOV);
                 break;
 
-
+				
 			case SDL_MOUSEBUTTONDOWN: // to get event to mouse click
 				mouse_buttons[sdlEvent.button.button - 1] = KEY_DOWN;
 				break;
@@ -85,6 +90,15 @@ update_status ModuleInput::Update()
 
 			case SDL_MOUSEWHEEL: // to get event to mouse wheel
 				yWheel = sdlEvent.wheel.y;
+				break;
+
+			case SDL_DROPFILE: //drag and drop gameobjects
+				glDeleteVertexArrays(1, (GLuint*)&App->GetModel()->mesh->vao);
+				glDeleteBuffers(1, (GLuint*)&App->GetModel()->mesh->vbo);
+				glDeleteBuffers(1, (GLuint*)&App->GetModel()->mesh->ebo);
+				delete App->GetModel()->mesh;
+				App->GetModel()->mesh = nullptr;
+				App->GetModel()->Load(sdlEvent.drop.file);
 				break;
         }
     }

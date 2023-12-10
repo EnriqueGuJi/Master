@@ -18,8 +18,9 @@ public:
 	float2 lastPosition; // last pos of mouseMov
 
 	Frustum frustum;
-	float rotateSpeed = 0.05;
-	float camSpeed = 0.01f;
+	const float rotateSpeed = 0.05;
+	const float camSpeed = 0.01f;
+	const float duplicateSpeed = 3.f;
 
 	float4x4 LookAt(float3 cameraPos, float3 targetPos, float3 upVector);
 
@@ -28,13 +29,16 @@ public:
 	void PanMovement();
 	void ZoomMovement();
 	void RotationMovement();
-	
+	void Orbit();
+
 	//rotate Y,X methods
 	void RotationInX();
 	void RotationInY();
+	void LookAtPoint(const float3& point);
+	void Center();
 
 	void SetFOV();
-	void SetAspectRatio();
+	void SetAspectRatio(float newAspectRatio);
 
 	ModuleCamera();
 	~ModuleCamera();

@@ -85,13 +85,14 @@ unsigned int ModuleTexture::LoadTexture(const char* path)
     widthTex = image.GetMetadata().width;
     widthTex = image.GetMetadata().height;
 
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, widthTex, heightTex, 0, GL_BGR, GL_UNSIGNED_BYTE, image.GetPixels());
+    glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, widthTex, heightTex, 0, format, type, image.GetPixels());
 
     for (size_t i = 0; i < image.GetMetadata().mipLevels; ++i)
     {
         const DirectX::Image* mip = image.GetImage(i, 0, 0);
         glTexImage2D(GL_TEXTURE_2D, i, internalFormat, mip->width, mip->height, 0, format, type, mip->pixels);
     }
+
     glGenerateMipmap(GL_TEXTURE_2D);
 
     return createTex;

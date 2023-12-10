@@ -23,7 +23,5 @@ public:
 
 	void WindowResized(unsigned width, unsigned height);
 
-	// lo ponen private = nullptr y en el constructor : y se lo pasan
 	void* context = nullptr;
-
 };

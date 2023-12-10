@@ -23,7 +23,7 @@ public:
 	ModuleModel();
 	~ModuleModel();
 
-	Mesh* mesh;
+	Mesh* mesh = nullptr;
 
 	bool Init();
 	update_status PreUpdate();

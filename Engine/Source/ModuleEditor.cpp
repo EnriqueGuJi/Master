@@ -5,6 +5,7 @@
 #include "imgui.h"
 #include "backends/imgui_impl_sdl2.h"
 #include "backends/imgui_impl_opengl3.h"
+#include <Windows.h>
 
 ModuleEditor::ModuleEditor()
 {
@@ -26,7 +27,7 @@ bool ModuleEditor::Init()
 	io->ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
 	io->ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 	io->ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
-	io->ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
+	//io->ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
 
 	ImGui_ImplSDL2_InitForOpenGL(App->GetWindow()->window, App->GetOpenGL()->context);
 	ImGui_ImplOpenGL3_Init("#version 460");
@@ -47,15 +48,75 @@ update_status ModuleEditor::Update()
 	ImGui_ImplSDL2_NewFrame();
 	ImGui::NewFrame();
 
-	static bool cierrate = false;
+	bool openWindow = true;
+	static bool openAbout = false;
 
-	if (cierrate) 
+	if (openWindow)
 	{
-		if (ImGui::Begin("Oooooole", &cierrate))
+		if (ImGui::DockSpaceOverViewport(0, ImGuiDockNodeFlags_PassthruCentralNode))
 		{
-			ImGui::Text("Hello!");
+			if (openAbout)
+			{
+				if (ImGui::Begin("About", &openAbout))
+				{
+					ImGui::Separator();
+					ImGui::Text("Our own Engine for assigment 1.");
+					ImGui::Text("In this engine we can use various modules for manage our own Enigne,");
+					ImGui::Text("(Camera, models, textures, imgui, OpenGL, shaders and more.");
+					ImGui::Spacing();
+					ImGui::Separator();
+					ImGui::Spacing();
+					ImGui::Text("Libraries");
+					ImGui::Text("OpenGL 4.6");
+					ImGui::Text("SDL 2.0.16");
+					ImGui::Text("Glew 2.1.0");
+					ImGui::Text("MathGeoLib 1.5");
+					ImGui::Text("DirectTex 201");
+					ImGui::Text("TinyGLTF v2.8.10");
+					ImGui::Text("ImGui v1.89.9");
+					ImGui::Spacing();
+					ImGui::Separator();
+					ImGui::Spacing();
+					ImGui::Text("Licence");
+					ImGui::Text("MIT License Copyright(c) 2023 Enrique Gutierrez Jimenez");
+					ImGui::Separator();
+					ImGui::Text("");
+					ImGui::End();
+				}
+			}
 			
-			ImGui::End();
+			if (ImGui::BeginMainMenuBar())
+			{
+				if (ImGui::BeginMenu("File"))
+				{
+					if (ImGui::MenuItem("Quit"))
+					{
+						return UPDATE_STOP;
+					}
+					ImGui::EndMenu();
+
+				}
+
+				if (ImGui::BeginMenu("Help"))
+				{
+					if (ImGui::MenuItem("About"))
+					{
+						openAbout = true;
+					}
+
+					if (ImGui::MenuItem("GitHub"))
+					{
+						ShellExecute(NULL, "open", "https://github.com/EnriqueGuJi?tab=repositories", NULL, NULL, SW_SHOWNORMAL);
+					}
+
+					ImGui::EndMenu();
+				}
+				ImGui::EndMainMenuBar();
+			}
+			//ImGui::Begin("Console");
+			//ImGui::End();
+			//ImGui::Begin("Inspector");
+			//ImGui::End();
 		}
 	}
 

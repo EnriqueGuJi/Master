@@ -3,6 +3,13 @@
 #include "Module.h"
 #include "ModuleModel.h"
 
+namespace tinygltf
+{
+	class Model;
+	struct Mesh;
+	struct Primitive;
+}
+
 class Mesh
 {
 public:
@@ -18,7 +25,5 @@ public:
 	void LoadEBO(const tinygltf::Model& model, const tinygltf::Mesh& mesh, const tinygltf::Primitive& primitive);
 	void CreateVAO();
 	void Draw();
-
-
 };
 
