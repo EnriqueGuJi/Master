@@ -92,8 +92,8 @@ bool ModuleProgram::Init()
 	const char* fragmentData;
 
 	//First step to load the shaders, we need to write manually the path
-	vertexData = LoadingShader("../Source/vertexShader.glsl");
-	fragmentData = LoadingShader("../Source/fragmentShader.glsl");
+	vertexData = LoadingShader("vertexShader.glsl");
+	fragmentData = LoadingShader("fragmentShader.glsl");
 
 	//Second step, we need to pass the variables vertexData, and fragmentData from before
 	compileVertex = CompileShader(GL_VERTEX_SHADER, vertexData);
